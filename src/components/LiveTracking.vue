@@ -57,10 +57,7 @@ onMounted(() => {
 // Automated next-step loop
 const currentIndex = ref(0)
 function nextStop() {
-  currentIndex.value++
-  if (currentIndex.value >= stops.length) {
-    currentIndex.value = 0
-  }
+  currentIndex.value = (currentIndex.value + 1) % stops.length
 }
 let autoInterval = null
 onMounted(() => {
@@ -103,14 +100,10 @@ const trainTop = computed(() => {
 
       <!-- Animated train icon -->
       <div
-        class="absolute left-0 w-6 h-6 -ml-3 transition-top duration-500"
-        :style="{ top: trainTop }"
+        class="absolute left-0 w-6 h-6 -ml-3 transition-all duration-3000 ease-linear"
+        :style="{ top: trainTop, transitionProperty: 'top, left' }"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-600" fill="none"
-             viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M3 13h2l1 2h8l1-2h2M5 8h14M12 2v6M6 2v6"/>
-        </svg>
+        <img src="/train.png" alt="Train" class="w-full h-full" />
       </div>
 
       <ul class="space-y-12">
@@ -118,7 +111,7 @@ const trainTop = computed(() => {
           <!-- Marker circle -->
           <div
             :class="[
-              'absolute -left-1.5 w-3 h-3 rounded-full border-2',
+              'absolute -left-1.5 w-3 h-3 rounded-full border-2 transition-colors duration-500',
               stop.type==='live'         ? 'bg-white border-blue-600' :
               stop.type==='intermediate' ? 'bg-white border-gray-300' :
               stop.highlight==='orange'  ? 'bg-orange-500 border-orange-500' :
@@ -135,12 +128,7 @@ const trainTop = computed(() => {
 
             <!-- Live location -->
             <div v-if="stop.type==='live'" class="flex items-center text-blue-600 font-medium">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none"
-                   viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M9 17v-6a2 2 0 012-2h2a2 2 0 012 2v6M7 17h10M5 17a2 2 0
-                         100-4m14 4a2 2 0 100-4"/>
-              </svg>
+              <img src="/train.png" alt="Live" class="w-5 h-5 mr-2" />
               <span>Live location</span>
             </div>
 
@@ -187,11 +175,7 @@ const trainTop = computed(() => {
             <!-- Highlight -->
             <div v-else-if="stop.highlight==='orange'" class="flex items-center space-x-2">
               <p class="font-medium">{{ stop.station }}</p>
-              <svg xmlns="http://www.w3.org/2000/svg" class="-rotate-45 w-4 h-4 text-gray-600" fill="none"
-                   viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-              </svg>
+              <img src="/train.png" alt="Highlight" class="w-4 h-4 rotate-45 text-gray-600" />
               <span class="text-gray-600 text-sm">{{ stop.label }}</span>
             </div>
           </div>

@@ -35,7 +35,7 @@ const typeLabel = computed(() => {
 </script>
 
 <template>
-  <div class="max-w-md bg-white p-4 rounded-lg shadow flex flex-col space-y-4">
+  <div class="max-w-md bg-white p-4 rounded-lg  flex flex-col space-y-4">
     <!-- Header -->
     <div class="flex items-center justify-between">
       <div class="flex items-center space-x-2">
