@@ -1,6 +1,6 @@
-<!-- src/components/WelcomeMessage.vue -->
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   userName: {
@@ -17,15 +17,23 @@ const props = defineProps({
   }
 })
 
-// for simple fade-in on mount
+const { t } = useI18n()
+
+// simple fade-in on mount
 const isVisible = ref(false)
 onMounted(() => {
   setTimeout(() => isVisible.value = true, 50)
 })
+
+// smooth scroll handler
+function scrollToLiveTracking() {
+  const el = document.getElementById('live-tracking')
+  if (el) el.scrollIntoView({ behavior: 'smooth' })
+}
 </script>
 
 <template>
-  <section class="relative max-w-4xl mx-auto overflow-hidden  shadow-lg">
+  <section class="relative max-w-4xl mx-auto overflow-hidden shadow-lg">
     <!-- Hero background with gradient overlay -->
     <div class="relative h-64 sm:h-80">
       <img
@@ -40,11 +48,16 @@ onMounted(() => {
         :class="isVisible ? 'opacity-100' : 'opacity-0'"
       >
         <h2 class="text-2xl sm:text-3xl font-bold">
-          Hello {{ userName }}<span v-if="groupName"> of {{ groupName }}</span>!
+          <template v-if="props.groupName">
+            {{ t('welcome.helloGroup', { name: props.userName, group: props.groupName }) }}
+          </template>
+          <template v-else>
+            {{ t('welcome.hello', { name: props.userName }) }}
+          </template>
         </h2>
         <p class="text-sm sm:text-base max-w-md">
-          Thank you for booking your group trip.<br />
-          Reservation #<span class="font-medium">{{ reservationNumber }}</span>
+          {{ t('welcome.thankYou') }}<br />
+          {{ t('welcome.reservation', { num: props.reservationNumber }) }}
         </p>
       </div>
     </div>
@@ -52,26 +65,20 @@ onMounted(() => {
     <!-- Body content -->
     <div class="bg-white p-6 space-y-4">
       <p class="text-gray-800 text-lg font-semibold">
-        We’re excited to welcome you on board
+        {{ t('welcome.subtitleTitle') }}
       </p>
       <p class="text-gray-700 leading-relaxed">
-        Below you’ll find all the tips and tools you need for a smooth journey.
-        Feel free to explore your itinerary, track the train in real time, and
-        adjust your details at any time.
+        {{ t('welcome.subtitleText') }}
       </p>
       <!-- CTA button -->
       <div class="text-center">
-        <a
-          href="#live-tracking"
+        <button
+          @click="scrollToLiveTracking"
           class="inline-block px-5 py-2 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 transition"
         >
-          View your journey →
-        </a>
+          {{ t('welcome.cta') }}
+        </button>
       </div>
     </div>
   </section>
 </template>
-
-<style scoped>
-/* nothing extra—Tailwind handles transitions */
-</style>
