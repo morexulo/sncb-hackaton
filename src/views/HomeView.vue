@@ -30,7 +30,7 @@ function handleReviewSubmit(data) {
 
 <template>
   <main class="pt-48 p-2 sm:pt-0 sm:p-6 relative">
-    <div class="w-full space-y-8 sm:max-w-4xl sm:mx-auto">
+    <div class="w-full space-y-8 px-4">
       <template v-if="!isReviewMode">
         <!-- Header -->
         <GroupHeader reservationNumber="30000 666 0265" />
@@ -43,7 +43,7 @@ function handleReviewSubmit(data) {
         />
 
         <!-- 2×2 summary grid -->
-        <div class="grid grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <TripSummaryCard
             from="Gent-Sint-Pieters"
             to="Antwerpen-Centraal"
@@ -77,7 +77,7 @@ function handleReviewSubmit(data) {
         </div>
 
         <!-- QR and Tips side by side -->
-        <div class="grid grid-cols-2 gap-6 mt-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <SharePlatformQR link="https://yourapp.com/group/30000-666-0265" />
           <TravelTipCard
             departureStation="Gent-Sint-Pieters"
@@ -120,7 +120,6 @@ function handleReviewSubmit(data) {
             Leave feedback
           </button>
         </div>
-
       </template>
 
       <template v-else>

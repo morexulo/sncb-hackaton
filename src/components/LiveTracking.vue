@@ -1,9 +1,9 @@
 <template>
-  <section class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow relative">
+  <section class="w-full bg-white p-4 rounded-lg shadow relative">
     <h2 class="text-xl font-semibold mb-4">Follow your train in real time</h2>
 
     <!-- Toasts -->
-    <div class="fixed top-6 right-6 space-y-2 z-50">
+    <div class="fixed top-6 right-4 space-y-2 z-50">
       <div
         v-for="t in toasts"
         :key="t.id"
@@ -18,11 +18,11 @@
       Your location: Track 12 at Gent-Sint-Pieters.
     </div>
 
-    <div class="relative pl-8">
+    <div class="relative pl-4 sm:pl-8">
       <!-- Vertical line -->
-      <div class="absolute left-3 top-0 bottom-0 w-px bg-blue-600"></div>
+      <div class="absolute left-2 sm:left-3 top-0 bottom-0 w-px bg-blue-600"></div>
 
-      <ul class="space-y-12">
+      <ul class="space-y-8 sm:space-y-12">
         <li v-for="(stop, i) in stops" :key="i" class="relative">
           <!-- Marker circle -->
           <div
@@ -62,7 +62,7 @@
               <p class="font-medium">{{ stop.station }} track {{ stop.track }}</p>
               
               <!-- Train Visual with Reserved Seats Indicator -->
-              <div class="bg-gray-50 p-4 rounded-lg border">
+              <div class="bg-gray-50 p-3 rounded-lg border overflow-x-auto">
                 <div class="mb-3">
                   <h4 class="text-sm font-medium text-gray-700 mb-2">Train Composition</h4>
                   <div class="flex items-center space-x-1 mb-2">
@@ -74,12 +74,12 @@
                 </div>
 
                 <!-- Enhanced Train Visual -->
-                <div class="relative">
+                <div class="relative min-w-[600px]">
                   <!-- Train track -->
                   <div class="absolute inset-y-1/2 left-0 right-0 h-1 bg-gray-400 rounded-full z-0"></div>
                   
                   <!-- Train with locomotive and wagons, evenly spaced -->
-                  <div class="flex items-center justify-between w-full relative z-10">
+                  <div class="flex items-center justify-between w-full relative z-10 px-2">
                     <!-- Locomotive -->
                     <div class="relative">
                       <svg width="40" height="32" viewBox="0 0 40 32" class="drop-shadow-sm">
@@ -174,12 +174,12 @@
                 <!-- Occupancy visualization -->
                 <div class="mt-4">
                   <h5 class="text-sm font-medium text-gray-700 mb-2">Expected Occupancy</h5>
-                  <div class="flex items-end space-x-1 h-12 bg-white p-2 rounded border">
+                  <div class="flex items-end space-x-1 h-12 bg-white p-2 rounded border overflow-x-auto">
                     <div
                       v-for="(level, idx) in composition.occupancyLevels"
                       :key="idx"
                       :class="[
-                        'flex-1 transition-all duration-300',
+                        'flex-1 transition-all duration-300 min-w-4',
                         composition.reservedCarriages.includes(idx) 
                           ? 'bg-green-400' 
                           : level > 0.7 ? 'bg-red-400' : level > 0.4 ? 'bg-yellow-400' : 'bg-green-400'

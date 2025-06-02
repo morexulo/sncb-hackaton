@@ -40,22 +40,30 @@ function handleBook(option) {
 </script>
 
 <template>
-  <main class="p-6 relative">
-    <div class="max-w-4xl mx-auto space-y-8">
+  <main class="min-h-screen">
+    <!-- Encabezado -->
+    <div class="mb-6">
       <TicketHeader />
+    </div>
 
+    <!-- Formulario de búsqueda -->
+    <div class="mb-6">
       <TicketForm @search="handleSearch" />
+    </div>
 
+    <!-- Vista previa de la búsqueda -->
+    <div v-if="searchParams" class="mb-6">
       <OptionPreview
-        v-if="searchParams"
         :origin="searchParams.origin"
         :destination="searchParams.destination"
         :date="searchParams.date"
         :groupSize="searchParams.groupSize"
       />
+    </div>
 
+    <!-- Resultados -->
+    <div v-if="searchResults.length" class="mb-6">
       <OptionResult
-        v-if="searchResults.length"
         :results="searchResults"
         @book="handleBook"
       />
